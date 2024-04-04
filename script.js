@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
             row.innerHTML = `
                 <td>${contato.nome}</td>
                 <td>${contato.telefone}</td>
+                <td>${contato.qnt}</td>
                 <td>
                     <button onclick="editContato(${contato.id})">Editar</button>
                     <button onclick="deleteContato(${contato.id})">Excluir</button>
@@ -25,15 +26,17 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         const nome = document.getElementById("nome").value;
         const telefone = document.getElementById("telefone").value;
+        const qnt = document.getElementById("qnt").value;
 
         const novoContato = {
             id: Date.now(),
             nome: nome,
             telefone: telefone,
+            qnt: qnt,
         };
 
         database.push(novoContato);
-        localStorage.setItem("contatos", JSON.stringify(database));
+        localStorage.setItem("estoque", JSON.stringify(database));
         refreshTable();
 
         addForm.reset();
@@ -45,11 +48,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const nome = prompt("Novo nome:", contato.nome);
         const telefone = prompt("Novo telefone:", contato.telefone);
+        const qnt = prompt("Nova quantidade:", contato.qnt);
 
         if (nome !== null && telefone !== null) {
             contato.nome = nome;
             contato.telefone = telefone;
-            localStorage.setItem("contatos", JSON.stringify(database));
+            contato.qnt = qnt
+            localStorage.setItem("estoque", JSON.stringify(database));
             refreshTable();
         }
     };
@@ -60,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const index = database.findIndex((contato) => contato.id === id);
             if (index !== -1) {
                 database.splice(index, 1);
-                localStorage.setItem("contatos", JSON.stringify(database));
+                localStorage.setItem("estoque", JSON.stringify(database));
                 refreshTable();
             }
         }
@@ -69,28 +74,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const sqlite3 = require("sqlite3").verbose();
 
-const db = new sqlite3.Database("contato.db");
+const db = new sqlite3.Database("estoque.db");
 
 db.serialize(() => {
     // Crie a tabela de contatos, se ela não existir
     db.run(`
-        CREATE TABLE IF NOT EXISTS contato (
+        CREATE TABLE IF NOT EXISTS estoque (
             id INTEGER PRIMARY KEY,
             nome TEXT,
-            telefone TEXT
+            telefone TEXT,
+            qnt TEXT,
         )
     `);
 
-    // Resto do código permanece o mesmo
 
-    // ...
 });
 
 // Atualize as funções para usar o banco de dados SQLite
 
-function adicionar_contato(nome, telefone) {
+function adicionar_contato(nome, telefone, qnt) {
     const sql = "INSERT INTO contato (nome, telefone) VALUES (?, ?)";
-    db.run(sql, [nome, telefone]);
+    db.run(sql, [nome, telefone,qnt]);
 }
 
 function listar_contatos(callback) {

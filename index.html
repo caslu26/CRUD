@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Sistema CRUD</title>
-</head>
-<body>
-    <h1>Sistema CRUD de Exemplo</h1>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Gerenciamento de Produto</title>
+  </head>
+  <body>
+    <h1>Sistema de Gerenciamento de Estoque</h1>
 
-    <h2>Adicionar Contato</h2>
+    <h2>Cadastrar Produto</h2>
     <form id="addForm">
-        Nome: <input type="text" id="nome">
-        Telefone: <input type="text" id="telefone">
-        <input type="submit" value="Adicionar">
+      Nome do Produto: <input type="text" id="nome" /> Categoria do produto:
+      <select id="telefone">
+        <option value="classico">Clássico</option>
+        <option value="casual">Casual</option>
+        <option value="estilo-de-rua">Estilo de Rua</option>
+        <option value="esportivo">Esportivo</option>
+        <option value="grunge">Grunge</option>
+      </select>
+      Quantidade: <input type="text" id="qnt" />
+      <input type="submit" value="Adicionar" />
     </form>
 
-    <h2>Lista dos  Contatos</h2>
+    <h2>Lista de Produtos</h2>
     <table id="contatos">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Dados serão inseridos aqui -->
-        </tbody>
+      <thead>
+        <tr>
+          <th>Nome do Produto</th>
+          <th>Categoria do Produto</th>
+          <th>Quantidade</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dados serão inseridos aqui -->
+      </tbody>
     </table>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
